@@ -1,0 +1,7 @@
+# Ignore sensitive data
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+*.tfvars.json
+.env
