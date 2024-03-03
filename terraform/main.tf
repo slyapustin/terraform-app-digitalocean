@@ -11,14 +11,37 @@ provider "digitalocean" {
   token = var.do_token
 }
 
+
+
 resource "digitalocean_droplet" "my_svelte_app" {
   image  = "docker-20-04"
   name   = "svelte-app-droplet"
-  region = "nyc3"
+  region = "ams3"
   size   = "s-1vcpu-1gb"
   ssh_keys = [
     var.ssh_fingerprint
   ]
+
+  provisioner "file" {
+    source      = "../Dockerfile"
+    destination = "/tmp/my_svelte_app"
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "cd /tmp/my_svelte_app",
+      "docker build -t my_svelte_app .", // If using Docker
+      "docker run -d -p 80:80 my_svelte_app", // Adjust ports as needed
+      // OR if not using Docker, commands to install Node.js, npm install, and npm run build, etc.
+    ]
+  }
+
+  connection {
+    type        = "ssh"
+    host        = self.ipv4_address
+    user        = "root"
+    private_key = file(var.private_key_path)
+  } 
 }
 
 resource "digitalocean_domain" "myapp_domain" {
