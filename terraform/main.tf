@@ -31,8 +31,7 @@ resource "digitalocean_droplet" "my_svelte_app" {
     inline = [
       "cd /tmp/my_svelte_app",
       "docker build -t my_svelte_app .", // If using Docker
-      "docker run -d -p 80:80 my_svelte_app", // Adjust ports as needed
-      // OR if not using Docker, commands to install Node.js, npm install, and npm run build, etc.
+      "docker run -d -p 3000:80 my_svelte_app", // Adjust ports as needed
     ]
   }
 

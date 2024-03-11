@@ -4,13 +4,13 @@ FROM node:18 as build-stage
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY package*.json ./
+COPY svelte-app/package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy the rest of the app
-COPY . .
+COPY svelte-app/. .
 
 # Build the app
 RUN npm run build
@@ -19,6 +19,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Start nginx
-# CMD ["nginx", "-g", "daemon off;"]
-#CMD ["node", "build/index.js"]
-ENTRYPOINT [ "node", "build" ]
+CMD ["node", "build/index.js"]
