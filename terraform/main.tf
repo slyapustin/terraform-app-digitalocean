@@ -11,8 +11,6 @@ provider "digitalocean" {
   token = var.do_token
 }
 
-
-
 resource "digitalocean_droplet" "my_svelte_app" {
   image  = "docker-20-04"
   name   = "svelte-app-droplet"
@@ -22,16 +20,27 @@ resource "digitalocean_droplet" "my_svelte_app" {
     var.ssh_fingerprint
   ]
 
+  provisioner "remote-exec" {
+    inline = [
+      "mkdir -p /tmp/my_svelte_app",
+    ]
+  }
+
   provisioner "file" {
     source      = "../Dockerfile"
-    destination = "/tmp/my_svelte_app"
+    destination = "/tmp/my_svelte_app/Dockerfile"
+  }
+
+  provisioner "file" {
+    source      = "../svelte-app"
+    destination = "/tmp/my_svelte_app/svelte-app/"
   }
 
   provisioner "remote-exec" {
     inline = [
       "cd /tmp/my_svelte_app",
       "docker build -t my_svelte_app .", // If using Docker
-      "docker run -d -p 3000:80 my_svelte_app", // Adjust ports as needed
+      "docker run -d -p 80:3000 my_svelte_app", // Adjust ports as needed
     ]
   }
 
