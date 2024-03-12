@@ -7,7 +7,7 @@ This project is a Terraform configuration for deploying a SvelteKit application 
 Before getting started, make sure you have the following:
 
 - [Terraform](https://www.terraform.io/downloads.html) installed on your local machine.
-- A DigitalOcean account. If you don't have one, you can sign up [here](https://cloud.digitalocean.com/registrations/new).
+- A DigitalOcean account. If you don't have one, you can sign up [here](https://m.do.co/c/08ce1ee690de).
 
 ## Getting Started
 
