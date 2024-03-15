@@ -13,9 +13,9 @@ provider "digitalocean" {
 
 resource "digitalocean_droplet" "my_svelte_app" {
   image  = "docker-20-04"
-  name   = "svelte-app-droplet"
-  region = "ams3"
-  size   = "s-1vcpu-1gb"
+  name   = var.digitalocean_droplet_name
+  region = var.digitalocean_droplet_region
+  size   = var.digitalocean_droplet_size
   ssh_keys = [
     var.ssh_fingerprint
   ]
